@@ -1,0 +1,16 @@
+{
+  "name": "prettier-pls-no-ignore",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "check": "prettier --check .",
+    "format": "prettier --write ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "prettier": "^3.3.3"
+  }
+}
