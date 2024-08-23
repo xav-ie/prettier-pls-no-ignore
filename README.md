@@ -1,5 +1,7 @@
 # Prettier Pls No Ignore 😱
 
+Idk I am just dumb. Read the commits. I guess you need `/` in front of all dirs for prettier to behave properly. This is not obvious and not a convention I have encountered. Will promote it now lol.
+
 According to this documentation, https://prettier.io/docs/en/cli#--ignore-path:
 
 > --ignore-path
