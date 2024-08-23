@@ -1,3 +1,5 @@
 node_modules
-fake-dist
-!fake-dist/*.json
+/fake-dist/**
+# !fake-dist/*.json
+!/fake-dist/pls-format-me.json
+# !./fake-dist/*.json

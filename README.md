@@ -66,9 +66,17 @@ In the first commit of this repo, it is simply contains just:
 node_modules
 ```
 
+And here is the file layout:
+
+```
+fake-dist
+├── no-formatting-pls.js
+└── pls-format-me.js
+```
+
 Running `prettier --check .` returns that prettier wants to format `fake-dist/no-formatting-pls.js` and `fake-dist/pls-format-me.js`. This makes sense!
 
-Second commit. We change .gitignore to contain:
+In the second commit, we change `.gitignore` to contain:
 
 ```
 node_modules
@@ -80,7 +88,7 @@ Why would you do this? Well, for the sake of example pretend this was a generate
 
 This is not uncommon for generated files to live in dist directories and be unignored for code review purposes. Think schema files, graphql files, and other types of files that are important to be committed for the review process. It is also often times important to format these files for easier review process.
 
-Unfortunately, the documentation is not correct. Prettier will follow its made up rules of reading files which I (and probably you, too) do not know what they are, because, well, the documentaiton is incorrect and follows no convention whatsoever and does not explain itself.
+Unfortunately, the documentation is not correct. Prettier follow its own set of rules for reading files, which aren't accurately explained in the current documentation. From what I can understand, once a file is ignored, it is no longer possible to format it, even if your .gitignore uses the `!` operator to unignore it. It also only reads from `./.gitignore` and it is not recursive on `.prettierignore`.
 
 ## Workarounds
 
@@ -113,8 +121,12 @@ In fact, I think it would be better if Prettier had a way to handle sub-`.pretti
 
 5. If your `fake-dist` directory happens to be in a package of a monorepo, you can just use the recursive feature of `.prettierignore` and format from the main repo. To elaborate, pretend this repo was a repo in a monorepo. A simple package with its own `./.gitignore`. The monorepo does not need to specify the files to ignore in this mini-package; the monorepo does not have a `./.gitignore`. This means it does not face this `./.gitignore` problem. It _can_ format your package because from the monorepo perspective, it is not ignored according to Prettier.
 
-   Not so fast! We only want to format `./prettier-pls-no-ignore/fake-dist/*.json`. That's A-Ok! We can use workaround 2.... oh wait no. oh no. Workaround 2. kind of works when you have a limited file set, but the workaround explains why it is not feasible. For this reason, this workaround is given a half-feasible/10. It is also really confusing to have Prettier want to format a file on the monorepo level but not on the sub-repo level.
+   Not so fast! We only want to format `./prettier-pls-no-ignore/fake-dist/*.json`. That's A-Ok! We can use workaround 2 to ignore the files we don't want formatted.... oh wait no. oh no. Workaround 2. kind of works when you have a limited file set, but the workaround explains why it is not feasible. For this reason, this workaround is given a half-feasible/10. It is also really confusing to have Prettier want to format a file on the monorepo level but not on the sub-repo level. You also have to be in a monorepo.
 
 If Prettier had both recursive `.prettierignore` and followed `!` rules, this would solve a lot of problems for a lot of people.
 
 There could be other soltions to this and I am happy to hear them, but I hope reading this you are at least opened to the idea that Prettier should have an opt-in option to follow all `.gitignore` behavior.
+
+Another way forward is to simply allow Prettier to not look at `./.gitignore`. This could work! Although, why _not_ have the first proposed solution when, to me and people in other issues (https://github.com/prettier/prettier/issues/4081, https://github.com/prettier/prettier/issues/14427, https://github.com/prettier/prettier/issues/14434), _really_ want this solution?
+
+Another alternative I see is documentation explaining all these edge cases and these unsatisfactory workarounds.

@@ -1,0 +1,6 @@
+# irrelevant
+# !/fake-dist/*.json
+# !*.json
+# !/fake-dist/
+# !**/fake-dist/*.json
+# !./fake-dist/pls-format-me.json
